@@ -1,21 +1,30 @@
 import React from 'react'
 import './Header.css'
+import {Context} from './Context.jsx/Context'
+import {useNavigate} from "react-router-dom"
 
 function Header() {
 
-    const [counter, setCounter] = React.useState(50);
+    const hsNavigate = useNavigate();
+
+    const {counter, setCounter,isWrong,SetIsWrong,isGameEnd,SetGameEnd} = React.useContext(Context)
+ 
+    function handlehs(){
+        hsNavigate('/highscore')
+    }
+        
 
     React.useEffect(() => {
-        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
-      }, [counter]);  
+        counter > 0 && setTimeout(() => isWrong ? setCounter(counter - 10) : setCounter(counter - 1) , 1000)
+      }, [counter])
 
 
     return (
         <div className='header'>
 
-            <div>
+            <div onClick={handlehs}>
                 <a id="leaderboard">View Highscores 
-                <i class="fas fa-hand-point-left fa-lg"></i>
+                <i className="fas fa-hand-point-left fa-lg"></i>
                 </a>
             </div>
             
