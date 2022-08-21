@@ -11,6 +11,7 @@ function Main() {
   const[isCorrect,SetIsCorrect] = useState(false)
   const[score,SetScore] = useState(0)
   const[initial,SetInitial] = useState('')
+  const[hsArray,SetHsArray] = useState([{name:"sam",score:40}])
 
 
   const {counter, setCounter,isWrong,SetIsWrong,isGameEnd,SetGameEnd} = React.useContext(Context) 
@@ -45,7 +46,8 @@ function Main() {
   }
 
   function handleHighscores(){
-    localStorage.setItem('initial',JSON.stringify(initial))
+    SetHsArray([...hsArray,{name:initial,score:score}])
+    localStorage.setItem('initial',JSON.stringify(hsArray))
   }
 
   return (
