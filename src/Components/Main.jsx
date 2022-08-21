@@ -11,10 +11,16 @@ function Main() {
   const[isCorrect,SetIsCorrect] = useState(false)
   const[score,SetScore] = useState(0)
   const[initial,SetInitial] = useState('')
-  const[hsArray,SetHsArray] = useState([{name:"sam",score:40}])
+  
 
 
-  const {counter, setCounter,isWrong,SetIsWrong,isGameEnd,SetGameEnd} = React.useContext(Context) 
+  const {counter, setCounter,isWrong,SetIsWrong,isGameEnd,SetGameEnd,hsArray,SetHsArray} = React.useContext(Context) 
+
+  if(hsArray==null){
+    localStorage.setItem('initial',JSON.stringify([{name:"sam",score:50}]))
+  }else{
+    localStorage.setItem('initial',JSON.stringify(hsArray))
+  }
   
   function handleStartQuiz() {
     SetIsStarted(false)
@@ -27,9 +33,9 @@ function Main() {
         SetIsCorrect(true)
         SetScore(score+10)
         setTimeout(() => {
-            if(QuestionNum<4){
+            if(QuestionNum<QuizAPI.length-1){
             SetQuestionNum(QuestionNum+1)
-            }else if(QuestionNum==4){
+            }else if(QuestionNum==QuizAPI.length-1){
                 SetGameEnd(true)
             }
             SetIsCorrect(false)
@@ -46,8 +52,16 @@ function Main() {
   }
 
   function handleHighscores(){
+    console.log([...hsArray,{name:initial,score:score}])
     SetHsArray([...hsArray,{name:initial,score:score}])
+    console.log('LS2')
     localStorage.setItem('initial',JSON.stringify(hsArray))
+    console.log(hsArray)
+  }
+
+  function hnRestart(){
+    SetIsStarted(true)
+    SetGameEnd(false)
   }
 
   return (
@@ -84,6 +98,8 @@ function Main() {
                 <p>Enter Initials:</p>
                 <input onChange={event => SetInitial(event.target.value)} type="text" name="initial" id="input" />
                 <button type="submit" onClick={handleHighscores}>Submit</button>
+                
+                <button onClick={hnRestart}>Restart</button>
             </div>
         }
         </div>

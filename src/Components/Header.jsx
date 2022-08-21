@@ -28,7 +28,7 @@ function Header() {
                 </a>
             </div>
             
-            <div>Time:{counter}</div>
+            <div className='timercounter'>Time:{isGameEnd ? "over" : counter}</div>
             
         </div>
     )
