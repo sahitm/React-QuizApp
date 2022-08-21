@@ -25,6 +25,7 @@ function Main() {
   function handleStartQuiz() {
     SetIsStarted(false)
     setCounter(50)
+    
   }
 
 
@@ -62,6 +63,7 @@ function Main() {
   function hnRestart(){
     SetIsStarted(true)
     SetGameEnd(false)
+    window.location.reload();
   }
 
   return (
